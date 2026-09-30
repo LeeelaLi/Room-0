@@ -62,7 +62,16 @@ export default function FileTree({
             {symbol}
           </span>
 
-          <span>{node.name}</span>
+          <span>
+  {!gameState.player.discoveredObjects.includes(
+    nodeId
+  ) &&
+    node.visibleWhen && (
+      <span>* </span>
+    )}
+
+  {node.name}
+</span>
         </button>
 
         {isExplored &&

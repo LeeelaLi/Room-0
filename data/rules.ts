@@ -1,3 +1,4 @@
+import { world } from "./world";
 import type {
   GameState,
   WorldNode,
@@ -37,7 +38,6 @@ export function resolveNode(
   if (resolvedNode.children) {
     resolvedNode = {
       ...resolvedNode,
-
       children:
         resolvedNode.children.filter(
           (childId) =>
@@ -57,6 +57,12 @@ export function isNodeVisible(
   nodeId: string,
   gameState: GameState
 ): boolean {
+  const node = world[nodeId];
+
+  if (!node) {
+    return false;
+  }
+
   if (
     gameState.world.visibleNodes.includes(
       nodeId
@@ -65,14 +71,37 @@ export function isNodeVisible(
     return true;
   }
 
-  if (
-    nodeId === "DRAWER" &&
-    gameState.player.discoveredClues.includes(
-      "03:17"
-    )
-  ) {
-    return true;
+  if (!node.visibleWhen) {
+    return false;
   }
 
-  return false;
+  if (node.visibleWhen.clues) {
+    const hasAllClues =
+      node.visibleWhen.clues.every(
+        (clue) =>
+          gameState.player.discoveredClues.includes(
+            clue
+          )
+      );
+
+    if (!hasAllClues) {
+      return false;
+    }
+  }
+
+  if (node.visibleWhen.exploredNodes) {
+    const hasExploredAll =
+      node.visibleWhen.exploredNodes.every(
+        (nodeId) =>
+          gameState.player.exploredNodes.includes(
+            nodeId
+          )
+      );
+
+    if (!hasExploredAll) {
+      return false;
+    }
+  }
+
+  return true;
 }

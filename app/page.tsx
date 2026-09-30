@@ -104,6 +104,16 @@ function openNode(nodeId: string) {
               nodeId,
             ],
 
+      discoveredObjects:
+        current.player.discoveredObjects.includes(
+          nodeId
+        )
+          ? current.player.discoveredObjects
+          : [
+              ...current.player.discoveredObjects,
+              nodeId,
+            ],
+
       discoveredClues:
         node?.clue &&
         !current.player.discoveredClues.includes(

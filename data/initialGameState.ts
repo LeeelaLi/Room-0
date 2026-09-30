@@ -1,13 +1,14 @@
 import type { GameState } from "../types/game";
 
 export const initialGameState: GameState = {
-  player: {
-    key: null,
-    navigationStack: [],
-    exploredNodes: [],
-    discoveredClues: [],
-    unlockedPersonalContent: [],
-  },
+player: {
+  key: null,
+  navigationStack: [],
+  exploredNodes: [],
+  discoveredClues: [],
+  discoveredObjects: [],
+  unlockedPersonalContent: [],
+},
 
   world: {
 visibleNodes: [

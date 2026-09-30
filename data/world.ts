@@ -106,10 +106,13 @@ export const world: Record<string, WorldNode> = {
       "Meet me at 03:17.",
     clue: "03:17",
   },
-  "DRAWER": {
+"DRAWER": {
   id: "DRAWER",
   name: "DRAWER",
   description:
-    "A small drawer. It was not visible before.",
+    "A small drawer. It seems to have been left slightly open.",
+  visibleWhen: {
+    clues: ["03:17"],
+  },
 },
 };

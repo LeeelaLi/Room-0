@@ -6,6 +6,11 @@ export type WorldNode = {
   clue?: string;
   visible?: boolean;
   locked?: boolean;
+
+  visibleWhen?: {
+    clues?: string[];
+    exploredNodes?: string[];
+  };
 };
 
 export type WorldState = {
@@ -19,6 +24,7 @@ export type PlayerState = {
   navigationStack: string[];
   exploredNodes: string[];
   discoveredClues: string[];
+  discoveredObjects: string[];
   unlockedPersonalContent: string[];
 };
 
