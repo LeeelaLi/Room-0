@@ -55,32 +55,32 @@ setView("KEY");
     setView("LOBBY");
   }
 
-function enterRoom(roomName: string) {
-  const roomId = roomName.replaceAll(
-    " ",
-    "_"
-  );
+// function enterRoom(roomName: string) {
+//   const roomId = roomName.replaceAll(
+//     " ",
+//     "_"
+//   );
 
-  setGameState((current) => ({
-    ...current,
+//   setGameState((current) => ({
+//     ...current,
 
-    player: {
-      ...current.player,
+//     player: {
+//       ...current.player,
 
-      navigationStack: [roomId],
+//       navigationStack: [roomId],
 
-      exploredNodes:
-        current.player.exploredNodes.includes(roomId)
-          ? current.player.exploredNodes
-          : [
-              ...current.player.exploredNodes,
-              roomId,
-            ],
-    },
-  }));
+//       exploredNodes:
+//         current.player.exploredNodes.includes(roomId)
+//           ? current.player.exploredNodes
+//           : [
+//               ...current.player.exploredNodes,
+//               roomId,
+//             ],
+//     },
+//   }));
 
-  setView("NODE");
-}
+//   setView("NODE");
+// }
 
 function openNode(nodeId: string) {
   const node = world[nodeId];
@@ -169,10 +169,10 @@ function goBack() {
 
 if (view === "LOBBY") {
   return (
-    <Lobby
-      clues={gameState.player.discoveredClues}
-      onEnterRoom={enterRoom}
-    />
+<Lobby
+  gameState={gameState}
+  onOpenNode={openNode}
+/>
   );
 }
 

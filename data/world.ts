@@ -1,4 +1,4 @@
-import type { WorldNode } from "@/types/game";
+import type { WorldNode } from "../types/game";
 
 export const world: Record<string, WorldNode> = {
   "ROOM_01": {
@@ -12,17 +12,42 @@ export const world: Record<string, WorldNode> = {
     ],
   },
 
-  "TABLE": {
-    id: "TABLE",
-    name: "TABLE",
-    description:
-      "An old wooden table. There are several things on it.",
-    children: [
-      "NOTEBOOK",
-      "PEN",
-      "BOOK",
-    ],
+  "ROOM_02": {
+    id: "ROOM_02",
+    name: "ROOM 02",
+    description: "The room is empty.",
   },
+
+  "BASEMENT": {
+    id: "BASEMENT",
+    name: "BASEMENT",
+    description: "A dark basement.",
+  },
+
+  "ARCHIVE": {
+    id: "ARCHIVE",
+    name: "ARCHIVE",
+    description: "Rows of old files.",
+  },
+
+  "ELEVATOR": {
+    id: "ELEVATOR",
+    name: "ELEVATOR",
+    description: "An old elevator.",
+  },
+
+"TABLE": {
+  id: "TABLE",
+  name: "TABLE",
+  description:
+    "An old wooden table. There are several things on it.",
+  children: [
+    "NOTEBOOK",
+    "PEN",
+    "BOOK",
+    "DRAWER",
+  ],
+},
 
   "WINDOW": {
     id: "WINDOW",
@@ -81,4 +106,10 @@ export const world: Record<string, WorldNode> = {
       "Meet me at 03:17.",
     clue: "03:17",
   },
+  "DRAWER": {
+  id: "DRAWER",
+  name: "DRAWER",
+  description:
+    "A small drawer. It was not visible before.",
+},
 };

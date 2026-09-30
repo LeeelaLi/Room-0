@@ -1,21 +1,23 @@
 import ClueLog from "./ClueLog";
+import FileTree from "./FileTree";
+import type { GameState } from "../types/game";
 
 type LobbyProps = {
-  clues: string[];
-  onEnterRoom: (roomName: string) => void;
+  gameState: GameState;
+  onOpenNode: (nodeId: string) => void;
 };
 
-const rooms = [
-  "ROOM 01",
-  "ROOM 02",
-  "BASEMENT",
-  "ARCHIVE",
-  "ELEVATOR",
-];
+// const rooms = [
+//   "ROOM 01",
+//   "ROOM 02",
+//   "BASEMENT",
+//   "ARCHIVE",
+//   "ELEVATOR",
+// ];
 
 export default function Lobby({
-  clues,
-  onEnterRoom,
+  gameState,
+  onOpenNode,
 }: LobbyProps) {
   return (
     <main className="page">
@@ -34,7 +36,7 @@ export default function Lobby({
           </div>
         </header>
 
-        <div className="room-list">
+        {/* <div className="room-list">
           {rooms.map((room) => (
             <button
               key={room}
@@ -49,7 +51,15 @@ export default function Lobby({
             </button>
           ))}
                   <ClueLog clues={clues} />  
-        </div>
+        </div> */}
+        <FileTree
+  gameState={gameState}
+  onOpenNode={onOpenNode}
+/>
+
+<ClueLog
+  clues={gameState.player.discoveredClues}
+/>
       </div>
     </main>
   );

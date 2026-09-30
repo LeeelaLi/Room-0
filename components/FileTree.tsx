@@ -1,59 +1,93 @@
-import type { GameState } from "../types/game";
 import { world } from "../data/world";
 import { isNodeVisible } from "../data/rules";
+import type { GameState } from "../types/game";
 
 type FileTreeProps = {
-  nodeId: string;
   gameState: GameState;
   onOpenNode: (nodeId: string) => void;
 };
 
+const rootNodes = [
+  "ROOM_01",
+  "ROOM_02",
+  "BASEMENT",
+  "ARCHIVE",
+  "ELEVATOR",
+];
+
 export default function FileTree({
-  nodeId,
   gameState,
   onOpenNode,
 }: FileTreeProps) {
-  const node = world[nodeId];
+  function renderNode(
+    nodeId: string,
+    depth: number
+  ) {
+    const node = world[nodeId];
 
-  if (!node || !node.children) {
-    return null;
-  }
+    if (!node) {
+      return null;
+    }
 
-  const visibleChildren = node.children.filter(
-    (childId) =>
-      isNodeVisible(childId, gameState)
-  );
+    if (!isNodeVisible(nodeId, gameState)) {
+      return null;
+    }
 
-  if (visibleChildren.length === 0) {
-    return null;
+    const isExplored =
+      gameState.player.exploredNodes.includes(
+        nodeId
+      );
+
+    const hasChildren =
+      !!node.children &&
+      node.children.length > 0;
+
+    const symbol =
+      isExplored && hasChildren
+        ? "▼"
+        : " ";
+
+    return (
+      <div key={nodeId}>
+        <button
+          className="file-tree-node"
+          style={{
+            paddingLeft: `${depth * 20}px`,
+          }}
+          onClick={() =>
+            onOpenNode(nodeId)
+          }
+        >
+          <span className="file-tree-symbol">
+            {symbol}
+          </span>
+
+          <span>{node.name}</span>
+        </button>
+
+        {isExplored &&
+          node.children?.map(
+            (childId) =>
+              renderNode(
+                childId,
+                depth + 1
+              )
+          )}
+      </div>
+    );
   }
 
   return (
     <div className="file-tree">
-      {visibleChildren.map((childId) => {
-        const child = world[childId];
+      <div className="file-tree-title">
+        WORLD/
+      </div>
 
-        if (!child) {
-          return null;
-        }
-
-        return (
-          <button
-            key={childId}
-            type="button"
-            className="file-tree-item"
-            onClick={() => onOpenNode(childId)}
-          >
-            <span>
-              {child.name}
-            </span>
-
-            <span className="file-tree-arrow">
-              &gt;
-            </span>
-          </button>
-        );
-      })}
+      <div className="file-tree-content">
+        {rootNodes.map((nodeId) =>
+          renderNode(nodeId, 0)
+        )}
+      </div>
     </div>
   );
 }
