@@ -4,10 +4,16 @@ export type WorldNode = {
   description?: string;
   children?: string[];
   clue?: string;
+
   visible?: boolean;
   locked?: boolean;
 
   visibleWhen?: {
+    clues?: string[];
+    exploredNodes?: string[];
+  };
+
+  lockedWhen?: {
     clues?: string[];
     exploredNodes?: string[];
   };

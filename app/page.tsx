@@ -257,12 +257,13 @@ const currentNode = resolveNode(
     }
 
     return (
-      <ObjectView
-        node={currentNode}
-        navigationStack={navigationStack}
-        onBack={goBack}
-        onOpenChild={openNode}
-      />
+<ObjectView
+  node={currentNode}
+  navigationStack={navigationStack}
+  gameState={gameState}
+  onBack={goBack}
+  onOpenChild={openNode}
+/>
     );
   }
 

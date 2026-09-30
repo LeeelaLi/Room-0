@@ -1,5 +1,8 @@
 import { world } from "../data/world";
-import { isNodeVisible } from "../data/rules";
+import {
+  isNodeVisible,
+  isNodeLocked,
+} from "../data/rules";
 import type { GameState } from "../types/game";
 
 type FileTreeProps = {
@@ -38,6 +41,8 @@ export default function FileTree({
         nodeId
       );
 
+      const isLocked =
+  isNodeLocked(nodeId, gameState);
     const hasChildren =
       !!node.children &&
       node.children.length > 0;
@@ -54,15 +59,19 @@ export default function FileTree({
           style={{
             paddingLeft: `${depth * 20}px`,
           }}
-          onClick={() =>
-            onOpenNode(nodeId)
-          }
+onClick={() => {
+  if (isLocked) {
+    return;
+  }
+
+  onOpenNode(nodeId);
+}}
         >
           <span className="file-tree-symbol">
             {symbol}
           </span>
 
-          <span>
+         <span>
   {!gameState.player.discoveredObjects.includes(
     nodeId
   ) &&
@@ -71,6 +80,10 @@ export default function FileTree({
     )}
 
   {node.name}
+
+  {isLocked && (
+    <span> [ LOCKED ]</span>
+  )}
 </span>
         </button>
 

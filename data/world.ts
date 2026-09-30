@@ -111,8 +111,13 @@ export const world: Record<string, WorldNode> = {
   name: "DRAWER",
   description:
     "A small drawer. It seems to have been left slightly open.",
+
   visibleWhen: {
     clues: ["03:17"],
+  },
+
+  lockedWhen: {
+    exploredNodes: ["PAGE_017"],
   },
 },
 };

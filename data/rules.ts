@@ -105,3 +105,44 @@ export function isNodeVisible(
 
   return true;
 }
+
+export function isNodeLocked(
+  nodeId: string,
+  gameState: GameState
+): boolean {
+  const node = world[nodeId];
+
+  if (!node?.lockedWhen) {
+    return false;
+  }
+
+  if (node.lockedWhen.clues) {
+    const hasRequiredClues =
+      node.lockedWhen.clues.every(
+        (clue) =>
+          gameState.player.discoveredClues.includes(
+            clue
+          )
+      );
+
+    if (!hasRequiredClues) {
+      return true;
+    }
+  }
+
+  if (node.lockedWhen.exploredNodes) {
+    const hasRequiredNodes =
+      node.lockedWhen.exploredNodes.every(
+        (requiredNode) =>
+          gameState.player.exploredNodes.includes(
+            requiredNode
+          )
+      );
+
+    if (!hasRequiredNodes) {
+      return true;
+    }
+  }
+
+  return false;
+}

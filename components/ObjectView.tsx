@@ -1,9 +1,14 @@
-import type { WorldNode } from "@/types/game";
+import type {
+  GameState,
+  WorldNode,
+} from "../types/game";
 import Breadcrumb from "./Breadcrumb";
+import { isNodeLocked } from "../data/rules";
 
 type ObjectViewProps = {
   node: WorldNode;
   navigationStack: string[];
+  gameState: GameState;
   onBack: () => void;
   onOpenChild: (childId: string) => void;
 };
@@ -11,6 +16,7 @@ type ObjectViewProps = {
 export default function ObjectView({
   node,
   navigationStack,
+  gameState,
   onBack,
   onOpenChild,
 }: ObjectViewProps) {
@@ -47,15 +53,32 @@ export default function ObjectView({
 
           {node.children && node.children.length > 0 && (
             <div className="node-children">
-              {node.children.map((childId) => (
-                <button
-                  key={childId}
-                  className="object-button"
-                  onClick={() => onOpenChild(childId)}
-                >
-                  [ {childId} ]
-                </button>
-              ))}
+{node.children.map((childId) => {
+  const childLocked = isNodeLocked(
+    childId,
+    gameState
+  );
+
+  return (
+    <button
+      key={childId}
+      className="object-button"
+      onClick={() => {
+        if (childLocked) {
+          return;
+        }
+
+        onOpenChild(childId);
+      }}
+    >
+      [ {childId} ]
+
+      {childLocked && (
+        <span> [ LOCKED ]</span>
+      )}
+    </button>
+  );
+})}
             </div>
           )}
         </section>
